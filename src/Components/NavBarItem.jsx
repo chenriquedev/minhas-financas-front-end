@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
-function NavBarItem({linkTo, descricao = 'descrição do link'}) {
+function NavBarItem({linkTo, descricao = 'descrição do link', onClick}) {
     return (
         
             <li className="nav-item">
-                <Link className="nav-link" to={linkTo}>{descricao}</Link>
+                <Link onClick={onClick} className="nav-link" to={linkTo}>{descricao}</Link>
             </li>
         
     );

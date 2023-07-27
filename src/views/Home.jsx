@@ -1,23 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Body from '../Components/Body';
 import Buttons from '../Components/Buttons';
 import Card from '../Components/Card';
 import { obterSaldo } from '../config/usuarioService';
 import { obterItem } from '../config/localstorageService';
+import currencyFormatter from 'currency-formatter'
+import {  obterUsuarioLogado } from '../config/AuthService';
+import DadosContext from '../config/context/DadosContext';
 
 function Home() {
-    const [saldo,setSaldo] = useState()
+    const [saldo, setSaldo] = useState()
 
-     useEffect(()=>{
-        const dadosDoUsuario = obterItem('_USUARIO_LOGADO')
-        const valor = async () =>{
+    useEffect(() => {
+        const dadosDoUsuario = obterUsuarioLogado()
+        const valor = async () => {
             const request = await obterSaldo(dadosDoUsuario.id)
             setSaldo(request.data)
         }
         valor()
-    },[]) 
+    }, [])
 
-    
+
 
 
     return (
@@ -25,12 +28,12 @@ function Home() {
             <Card title="Minhas Finanças">
                 <h1 className="display-3">Bem vindo!</h1>
                 <p className="lead">Esse é seu sistema de finanças.</p>
-                <p className="lead">Seu saldo para o mês atual é de R$ {saldo}</p>
+                <p className="lead">Seu saldo para o mês atual é de R$ {currencyFormatter.format(saldo, { locale: 'pt-BR' })}</p>
                 <hr className="my-4" />
                 <p>E essa é sua área administrativa, utilize um dos menus ou botões abaixo para navegar pelo sistema.</p>
-                <p className="lead" style={{display: 'flex', gap:'20px'}}>
-                    <Buttons classe="success btn-lg" desc="Cadastrar Usuario" link linkTo='/cadastro-usuario'/>
-                    <Buttons classe="danger btn-lg" desc="Cadastrar Lançamento"/>
+                <p className="lead" style={{ display: 'flex', gap: '20px' }}>
+                    <Buttons classe="success btn-lg" desc={<i className="pi pi-users"> Cadastrar Usuario</i>} link linkTo='/cadastro-usuario' />
+                    <Buttons classe="danger btn-lg" desc={<i className="pi pi-money-bill"> Cadastrar Lançamento</i>} link linkTo={'/cadastro-lancamento'} />
                 </p>
             </Card>
         </Body>

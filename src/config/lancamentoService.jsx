@@ -1,4 +1,4 @@
-import { del, get } from "./api"
+import { del, get, post, put } from "./api"
 
 const URL = '/api/lancamentos'
 
@@ -29,4 +29,21 @@ export const buscarLancamento = (lancamentoFiltro) =>{
 
 export const deletarLancamento = (id) =>{
     return del(`${URL}/${id}`)
+}
+
+
+export const salvar = (lancamento) =>{
+    return post(`${URL}`,lancamento)
+}
+
+export const obterPorId = (id) =>{
+    return get(`${URL}/${id}`)
+}
+
+export const atualizar = (lancamento) =>{
+    return put(`${URL}/${lancamento.id}`, lancamento)
+}
+
+export const atualizarStatus = (id, status) =>{
+    return put(`${URL}/${id}/atualiza-status`, {status})
 }

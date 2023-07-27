@@ -16,6 +16,6 @@ export const listaMes = [
 
 export const listaTipo = [
     { value: '', label: 'Selecione...' },
-    { value: 'RECEITA', label: 'Receita' },
-    { value: 'DESPESA', label: 'Despesa' }
+    { value: "RECEITA", label: 'Receita' },
+    { value: "DESPESA", label: 'Despesa' }
 ]

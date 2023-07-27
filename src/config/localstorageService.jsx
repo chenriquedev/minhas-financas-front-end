@@ -7,3 +7,7 @@ export const obterItem = (chave) =>{
 
     return JSON.parse(dadosDoUsuario)
 }
+
+export const removerItem = (chave) =>{
+    localStorage.removeItem(chave)
+}

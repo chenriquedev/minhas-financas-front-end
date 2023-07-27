@@ -1,6 +1,9 @@
 import currencyFormatter from 'currency-formatter'
 import Buttons from './Buttons';
-function LancamentoList({ caption, lancamento, edit, del }) {
+
+
+
+function LancamentoList({ caption, lancamento, edit, del, atualizaStatusEfetivado, atualizaStatusCancelado }) {
 
   const lancamentos = lancamento.map(item => (
     <tr key={item.id}>
@@ -9,9 +12,28 @@ function LancamentoList({ caption, lancamento, edit, del }) {
       <td>{item.tipo}</td>
       <td>{item.mes}</td>
       <td>{item.status}</td>
-      <td>
-        <Buttons desc="Editar" classe="success" onClick={e => edit(item.id)}/>
-        <Buttons desc="Deletar" classe="danger" onClick={e => del(item)} />
+      <td style={{ display: 'flex', gap: '10px' }}>
+
+        <Buttons
+          desc={<i className="pi pi-check"></i>}
+          classe="success"
+          disabled={item.status !== "PENDENTE" ? true : false}
+          onClick={e => atualizaStatusEfetivado(item.id, "EFETIVADO")} />
+
+        <Buttons
+          desc={<i className="pi pi-times "></i>}
+          classe="warning" disabled={item.status !== "PENDENTE" ? true : false}
+          onClick={e => atualizaStatusCancelado(item.id, "CANCELADO")} />
+
+        <Buttons
+          desc={<i className="pi pi-pencil "></i>}
+          classe="primary"
+          onClick={e => edit(item.id)} />
+
+        <Buttons
+          desc={<i className="pi pi-trash "></i>}
+          classe="danger"
+          onClick={e => del(item)} />
       </td>
 
     </tr>

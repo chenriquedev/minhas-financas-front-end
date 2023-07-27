@@ -1,4 +1,4 @@
-function FormGroup({ type, id, label, placeholder, describedby = null, value,change, name = null}) {
+function FormGroup({ type, id, label, placeholder, describedby = null, value,change, name = null, disabled = false}) {
   return (
     <div className="form-group">
       <label className="col-form-label" htmlFor={id}>{label}</label>
@@ -11,6 +11,7 @@ function FormGroup({ type, id, label, placeholder, describedby = null, value,cha
         placeholder={placeholder}
         aria-describedby={describedby}
         name={name}
+        disabled={disabled}
       />
     </div>
   );

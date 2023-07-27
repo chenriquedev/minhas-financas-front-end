@@ -6,6 +6,7 @@ import Buttons from "../Components/Buttons";
 import { salvarUsuario } from "../config/usuarioService";
 import { useNavigate } from "react-router-dom";
 import { mensagemErro, mensagemSucesso } from "../Components/toastr";
+import { obterItem } from "../config/localstorageService";
 
 function CadastroUsuario() {
     const [userDados, setUserDados] = useState({ nome: '', email: '', senha: '', confirmaSenha: '' })
@@ -56,24 +57,24 @@ function CadastroUsuario() {
             erros['senha'] = 'Senha não confere'
         }
         setFormError(erros)
-       
-        if(Object.entries(erros).length < 1){
+
+        if (Object.entries(erros).length < 1) {
             cadastrar()
         }
     }
 
 
     const cadastrar = async () => {
-         try {
-             const request = await salvarUsuario(userDados)
-             if (request.status === 201) {
-                 mensagemSucesso('Dados salvos com sucesso, faça login para acessar o sistema')
-                 navigator('/')
-             }
-         } catch (erro) {
-             mensagemErro(erro.response.data)
-             setUserDados({ nome: '', email: '', senha: '', confirmaSenha: '' })
-         }
+        try {
+            const request = await salvarUsuario(userDados)
+            if (request.status === 201) {
+                mensagemSucesso('Dados salvos com sucesso, faça login para acessar o sistema')
+                navigator('/')
+            }
+        } catch (erro) {
+            mensagemErro(erro.response.data)
+            setUserDados({ nome: '', email: '', senha: '', confirmaSenha: '' })
+        }
     }
 
     return (
@@ -126,7 +127,7 @@ function CadastroUsuario() {
                                 />
                                 <div style={{ display: 'flex', gap: '10px' }}>
                                     <Buttons classe="success" desc="Salvar" onClick={validarForm} />
-                                    <Buttons classe="danger" desc="Cancelar" link linkTo='/' />
+                                    <Buttons classe="danger" desc="Cancelar" link linkTo={obterItem("_USUARIO_LOGADO") ? "/home" : "/"} />
                                 </div>
 
                             </fieldset>

@@ -3,17 +3,19 @@ import Body from "../Components/Body";
 import Card from "../Components/Card";
 import FormGroup from "../Components/FormGroup";
 
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { autenticar } from "../config/usuarioService";
 import { adicionarItem } from "../config/localstorageService";
 
-import Swal from 'sweetalert2'
 import { mensagemErro } from "../Components/toastr";
+import { logar } from "../config/AuthService";
+import DadosContext from "../config/context/DadosContext";
 
 function Login() {
   const [userData, setUserData] = useState({ email: '', senha: '' });
   const navigate = useNavigate()
+  const { iniciarSessao } = useContext(DadosContext)
 
   const entrar = async () => {
     try {
@@ -22,25 +24,21 @@ function Login() {
         senha: userData.senha
       })
       login.status === 200 ?
-        (adicionarItem('_USUARIO_LOGADO', login.data),
+        (
+          iniciarSessao(login.data),
           navigate('/home')
         ) : null
     } catch (error) {
       error ?
-      mensagemErro(error.response.data)
-        /* Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: `${error.response.data}`
-
-        })  */: null
+        mensagemErro(error.response.data)
+        : null
       setUserData({ email: '', senha: '' })
     }
   }
 
   return (
     <>
-      <Body>
+      <Body width="6">
         <Card title="Login">
           <div className="row">
             <div className="col-lg-12">
@@ -65,8 +63,8 @@ function Login() {
                     type="password"
                   />
                   <div style={{ display: 'flex', gap: '10px' }}>
-                    <Buttons desc="Entrar" classe="success" onClick={entrar} />
-                    <Buttons desc="Cadastrar" classe="danger" link linkTo="/cadastro-usuario" />
+                    <Buttons desc={<i className="pi pi-sign-in"> Entrar</i>} classe="success" onClick={entrar} />
+                    <Buttons desc={<i className="pi pi-plus"> Cadastrar</i>} classe="danger" link linkTo="/cadastro-usuario" />
                   </div>
 
                 </fieldset>

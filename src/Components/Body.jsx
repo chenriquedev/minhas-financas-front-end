@@ -1,9 +1,9 @@
-function Body({children}) {
+function Body({children, width = 8}) {
     return (
         <div className="container">
             <div className="row">
                 <div
-                    className="col-md-8"
+                    className={`col-md-${width}`}
                     style={{ position: "relative", margin: '0 auto' }}
                 >
                     <div className="bs-docs-section">
