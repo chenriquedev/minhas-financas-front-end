@@ -38,12 +38,21 @@ pre {
   margin: 0 10px;
   width: 30px;
 }
-#home .nav-link,
-#help .nav-link {
+
+.nav-link {
+  font-family: sans-serif;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 700;
   color: #fff;
+  transition: 0.4s ease-in-out;
 }
+
+.nav-link:hover {
+  color: black !important;
+  background-color: #9b9b9b;
+  border-radius: 5px;
+}
+
 #home {
   padding-top: 0px;
 }

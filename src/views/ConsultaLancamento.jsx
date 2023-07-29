@@ -23,12 +23,14 @@ function ConsultaLancamento() {
     const { setLancamentoId } = useContext(DadosContext)
     const navigator = useNavigate()
 
+
     useEffect(() => {
         const dados = async () => {
             const usuarioLogado = obterItem('_USUARIO_LOGADO')
-            
+
             const lancamentoFiltro = { usuario: usuarioLogado.id }
             try {
+
                 const dados = await buscarLancamento(lancamentoFiltro)
                 const mostrarDados = dados.data.slice(0, 5)
                 setLancamento(mostrarDados)
@@ -40,7 +42,8 @@ function ConsultaLancamento() {
 
         }
         dados()
-    }, [lancamento])
+    }, [])
+
 
     useEffect(() => {
     }, [dialogData])
@@ -76,11 +79,13 @@ function ConsultaLancamento() {
             const response = await atualizarStatus(id, status)
             if (response.status === 200) {
                 mensagemSucesso("Lancamento alterado com sucesso")
+                buscar()
             }
         } catch (error) {
             mensagemErro(error.response.data)
         }
     }
+
     const handleEditChange = (id) => {
         setLancamentoId(id)
         navigator("/cadastro-lancamento")
@@ -114,41 +119,63 @@ function ConsultaLancamento() {
             <Body>
                 <Card title="Consulta Lançamento">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                             <div className="bs-component">
                                 <fieldset style={{ display: 'flex', flexDirection: "column", gap: '20px' }}>
-                                    <FormGroup
-                                        value={filtro.ano}
-                                        change={e => setFiltro({ ...filtro, ano: e.target.value })}
-                                        type="text"
-                                        className="form-control"
-                                        id="inputAno"
-                                        label="Ano: *"
-                                        placeholder="Digite o Ano"
-                                        name="inputAno" />
-                                    <SelectMenu
-                                        lista={listaMes}
-                                        label="Mês: *"
-                                        id="mes"
-                                        value={filtro.mes}
-                                        change={e => setFiltro({ ...filtro, mes: e.target.value })}
-                                    />
-                                    <FormGroup
-                                        value={filtro.descricao}
-                                        change={e => setFiltro({ ...filtro, descricao: e.target.value })}
-                                        type="text"
-                                        className="form-control"
-                                        id="inputDescricao"
-                                        label="Descricao: "
-                                        placeholder="Digite a Descricao"
-                                        name="inputDescricao" />
-                                    <SelectMenu
-                                        lista={listaTipo}
-                                        label="Tipo de Lançamento:"
-                                        id="tipoLancamento"
-                                        value={filtro.tipo}
-                                        change={e => setFiltro({ ...filtro, tipo: e.target.value })}
-                                    />
+                                    <div className="row">
+                                        <div className="col-lg-6">
+                                            <div className="bs-component">
+                                                <SelectMenu
+                                                    lista={listaMes}
+                                                    label="Mês: *"
+                                                    id="mes"
+                                                    value={filtro.mes}
+                                                    change={e => setFiltro({ ...filtro, mes: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <div className="bs-component">
+                                                <FormGroup
+                                                    value={filtro.ano}
+                                                    change={e => setFiltro({ ...filtro, ano: e.target.value })}
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="inputAno"
+                                                    label="Ano: *"
+                                                    placeholder="Digite o Ano"
+                                                    name="inputAno" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-lg-6">
+                                            <div className="bs-component">
+                                                <FormGroup
+                                                    value={filtro.descricao}
+                                                    change={e => setFiltro({ ...filtro, descricao: e.target.value })}
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="inputDescricao"
+                                                    label="Descricao: "
+                                                    placeholder="Digite a Descricao"
+                                                    name="inputDescricao" />
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <div className="bs-component">
+                                                <SelectMenu
+                                                    lista={listaTipo}
+                                                    label="Tipo de Lançamento:"
+                                                    id="tipoLancamento"
+                                                    value={filtro.tipo}
+                                                    change={e => setFiltro({ ...filtro, tipo: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div style={{ display: 'flex', gap: '10px' }}>
                                         <Buttons desc={<i className="pi pi-search"> Buscar</i>} classe="success" onClick={buscar} />
                                         <Buttons desc={<i className="pi pi-plus"> Cadastrar</i>} classe="danger" link linkTo="/cadastro-lancamento" />

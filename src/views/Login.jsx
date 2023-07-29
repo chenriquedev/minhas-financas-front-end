@@ -64,7 +64,7 @@ function Login() {
                   />
                   <div style={{ display: 'flex', gap: '10px' }}>
                     <Buttons desc={<i className="pi pi-sign-in"> Entrar</i>} classe="success" onClick={entrar} />
-                    <Buttons desc={<i className="pi pi-plus"> Cadastrar</i>} classe="danger" link linkTo="/cadastro-usuario" />
+                    <Buttons desc={<i className="pi pi-user-plus"> Cadastrar</i>} classe="danger" link linkTo="/cadastro-usuario" />
                   </div>
 
                 </fieldset>

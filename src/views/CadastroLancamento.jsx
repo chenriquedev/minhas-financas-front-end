@@ -45,7 +45,7 @@ function CadastroLancamento() {
             if (dados.status === 200) {
                 mensagemSucesso("Lancamento atualizado com sucesso")
                 setLancamentoId('')
-                return <Navigate to="/consulta-lancamento" />
+                return navigator("/consulta-lancamento")
             }
         } catch (error) {
             mensagemErro(error.response.data)
